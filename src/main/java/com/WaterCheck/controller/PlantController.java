@@ -19,9 +19,9 @@ public class PlantController {
         return ResponseEntity.ok(plantService.getAllPlants());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Plant> getPlantById(@PathVariable int id) {
-        return plantService.getPlantById(id)
+    @GetMapping("/{plantId}")
+    public ResponseEntity<Plant> getPlantById(@PathVariable int plantId) {
+        return plantService.getPlantById(plantId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -31,18 +31,18 @@ public class PlantController {
         return ResponseEntity.ok(plantService.savePlant(plant));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Plant> updatePlant(@PathVariable int id, @RequestBody Plant plant) {
-        if (!plantService.getPlantById(id).isPresent()) {
+    @PutMapping("/{plantId}")
+    public ResponseEntity<Plant> updatePlant(@PathVariable int plantId, @RequestBody Plant plant) {
+        if (!plantService.getPlantById(plantId).isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        plant.setPlantId(id);
+        plant.setPlantId(plantId);
         return ResponseEntity.ok(plantService.savePlant(plant));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePlant(@PathVariable int id) {
-        plantService.deletePlant(id);
+    @DeleteMapping("/{plantId}")
+    public ResponseEntity<Void> deletePlant(@PathVariable int plantId) {
+        plantService.deletePlant(plantId);
         return ResponseEntity.noContent().build();
     }
 }
